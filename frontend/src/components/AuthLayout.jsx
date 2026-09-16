@@ -15,9 +15,9 @@ const AuthLayout = ({ children }) => {
           >
 
             {/* Logo */}
-            <div className="font-semibold text-sm flex items-center gap-1">
+            <div className="font-semibold text-sm  flex items-center gap-1">
               <span>◢</span>
-              BrightNest
+              Tracker
             </div>
 
             {/* Text */}

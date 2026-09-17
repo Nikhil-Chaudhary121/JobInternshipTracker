@@ -34,7 +34,8 @@ const DeleteJobModal = ({
           </button>
 
           <button
-            onClick={() => onConfirm(job.id)}
+            onClick={() => {
+              onConfirm(job)}}
             className="flex-1 h-10 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600"
           >
             Delete

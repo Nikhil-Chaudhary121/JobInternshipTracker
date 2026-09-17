@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from "dotenv"
+import cors from 'cors'
 
 
 import connectDB from './db/connctDB.js'
@@ -18,12 +19,11 @@ const PORT = 5000;
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 // itemTestdb()
 // userTest()
-
-
 
 
 app.use('/user' , userRoute)

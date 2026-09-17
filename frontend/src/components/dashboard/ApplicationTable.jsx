@@ -22,7 +22,7 @@ const ApplicationTable = ({
               </th>
 
               <th className="px-5 py-3 text-[10px] uppercase tracking-wide font-medium text-gray-400">
-                Position
+                Role
               </th>
 
               <th className="px-5 py-3 text-[10px] uppercase tracking-wide font-medium text-gray-400">
@@ -45,8 +45,9 @@ const ApplicationTable = ({
             {jobs.length > 0 ? (
               jobs.map((job) => (
                 <ApplicationRow
-                  key={job.id}
+                  key={job.company}
                   job={job}
+                  role={job.role}
                   onStatusChange={onStatusChange}
                   onDelete={onDelete}
                 />
@@ -75,7 +76,7 @@ const ApplicationTable = ({
         {jobs.length > 0 ? (
           jobs.map((job) => (
             <ApplicationCard
-              key={job.id}
+              key={job.company}
               job={job}
               onStatusChange={onStatusChange}
               onDelete={onDelete}

@@ -6,7 +6,7 @@ import {getAllItem , getItem , createItem , updateItem , deleteItem } from '../c
 const router = express.Router()
 
 router.post('/' , getAllItem )
-router.post('/create',protectRoute ,createItem )
+router.post('/create' ,createItem )
 router.put('/update' ,updateItem )
 router.delete('/delete' ,deleteItem )
 router.post('/:id' ,getItem )

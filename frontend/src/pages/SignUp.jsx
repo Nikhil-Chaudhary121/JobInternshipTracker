@@ -1,8 +1,44 @@
 import AuthLayout from "../components/AuthLayout.jsx";
 import AuthInput from "../components/AuthInput.jsx";
+import { useState } from "react";
+import { redirect } from "react-router-dom";
 
 
 const Signup = () => {
+
+  const [inputs, setInputs] = useState({
+    username: "",
+    name : "",
+    email : "",
+    password: "",
+  })
+
+  const handleSignup = async () =>{
+    try {
+      console.log("here");
+      
+      const res = await fetch("http://localhost:5000/user/register", {
+        method : "POST",
+        headers :{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(inputs),
+        
+      })
+      const data = await res.json()
+      if(data.error){
+        console.log("error while fetching data after signup : " , data.error)
+        return ;
+      }
+      localStorage.setItem("user" , JSON.stringify(data))
+      console.log(data);
+    } catch (error) {
+      console.log("Error in signup Frontend : ", error.message)
+      return
+    }
+  }
+
+
   return (
     <AuthLayout>
 
@@ -21,40 +57,96 @@ const Signup = () => {
         </p>
       </div>
 
-      <form className="space-y-4">
+      {/* form */}
+      <div className="space-y-4">
 
-        <AuthInput
-          label="Name"
-          placeholder="Enter your name"
-        />
+      <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-800">
+       name
+      </label>
 
-        <AuthInput
-          label="Username"
-          placeholder="Choose a username"
-        />
+      <input
+        type='text'
+        placeholder='Enter Name'
+        className="w-full h-11 px-4 rounded-md border border-gray-200
+        bg-white text-sm outline-none
+        focus:border-black focus:ring-1 focus:ring-black
+        placeholder:text-gray-400 transition"
+        onChange={(e) =>{
+                setInputs({ ...inputs, name: e.target.value })
+  }}
+        value={inputs.name}
+      />
+    </div>
 
-        <AuthInput
-          label="Your email"
-          type="email"
-          placeholder="you@example.com"
-        />
+        <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-800">
+       username
+      </label>
 
-        <AuthInput
-          label="Create password"
-          type="password"
-          placeholder="••••••••••"
-        />
+      <input
+        type='text'
+        placeholder='Choose a username'
+        className="w-full h-11 px-4 rounded-md border border-gray-200
+        bg-white text-sm outline-none
+        focus:border-black focus:ring-1 focus:ring-black
+        placeholder:text-gray-400 transition"
+        onChange={(e) =>{
+                setInputs({ ...inputs, username: e.target.value })
+  }}
+        value={inputs.username}
+      />
+    </div>
+
+      <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-800">
+       email
+      </label>
+
+      <input
+        type='email'
+        placeholder='Enter your email'
+        className="w-full h-11 px-4 rounded-md border border-gray-200
+        bg-white text-sm outline-none
+        focus:border-black focus:ring-1 focus:ring-black
+        placeholder:text-gray-400 transition"
+        onChange={(e) =>{
+                setInputs({ ...inputs, email: e.target.value })
+  }}
+        value={inputs.email}
+      />
+    </div>
+
+        <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-800">
+       password
+      </label>
+
+      <input
+        type='text'
+        placeholder='Create Password'
+        className="w-full h-11 px-4 rounded-md border border-gray-200
+        bg-white text-sm outline-none
+        focus:border-black focus:ring-1 focus:ring-black
+        placeholder:text-gray-400 transition"
+        onChange={(e) =>{
+                setInputs({ ...inputs, password: e.target.value })
+  }}
+        value={inputs.password}
+      />
+    </div>
 
         <button
-          type="submit"
+          type=""
           className="w-full h-11 bg-[#050817] text-white rounded-md
           text-sm font-medium hover:bg-black transition
           shadow-lg shadow-black/10 mt-2"
+          onClick={()=>{handleSignup()}}
         >
           Create account
         </button>
 
-      </form>
+      </div>
 
       {/* Login */}
       <p className="text-center text-sm text-gray-400 mt-6">

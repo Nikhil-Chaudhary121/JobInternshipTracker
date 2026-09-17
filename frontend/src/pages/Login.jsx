@@ -1,13 +1,40 @@
 import AuthLayout from "../components/AuthLayout";
-import AuthInput from "../components/AuthInput";
+import { useState } from "react";
 
 const Login = () => {
+  const [inputs , setInputs] = useState({
+    username  : "",
+    password : "",
+  })
+
+  const handleLogin = async() => {
+    try {
+      const res =  await fetch("http://localhost:5000/user/login", {
+        method : "POST",
+        headers :{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(inputs),   
+      })
+      const data = await res.json()
+      if(data.error){
+        console.log("Error in Login Request : ", data.error)
+        return;
+      }
+      console.log(data);
+      localStorage.setItem('user' , JSON.stringify(data))
+    } catch (error) {
+      console.log("Error in login from frontend :" ,error.message)
+      return
+    }
+  }
+
   return (
     <AuthLayout>
 
       <div className="mb-7">
         <div className="text-3xl text-orange-400 mb-4">
-          *
+          
         </div>
 
         <h2 className="text-3xl font-semibold text-black">
@@ -20,18 +47,44 @@ const Login = () => {
         </p>
       </div>
 
-      <form className="space-y-5">
+      <div className="space-y-5">
 
-        <AuthInput
-          label="Your email or username"
-          placeholder="you@example.com"
-        />
+      <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-800">
+       username
+      </label>
 
-        <AuthInput
-          label="Password"
-          type="password"
-          placeholder="••••••••••"
-        />
+      <input
+        type='text'
+        placeholder='Enter your username'
+        className="w-full h-11 px-4 rounded-md border border-gray-200
+        bg-white text-sm outline-none
+        focus:border-black focus:ring-1 focus:ring-black
+        placeholder:text-gray-400 transition"
+        onChange={(e) =>{
+                setInputs({ ...inputs, username: e.target.value })}}
+        value={inputs.username}
+      />
+    </div>
+
+      <div className="space-y-2">
+      <label className="text-sm font-medium text-gray-800">
+       password
+      </label>
+
+      <input
+        type='text'
+        placeholder='Password'
+        className="w-full h-11 px-4 rounded-md border border-gray-200
+        bg-white text-sm outline-none
+        focus:border-black focus:ring-1 focus:ring-black
+        placeholder:text-gray-400 transition"
+        onChange={(e) =>{
+                setInputs({ ...inputs, password: e.target.value })
+  }}
+        value={inputs.password}
+      />
+    </div>
 
         <div className="flex justify-end">
           <a
@@ -43,15 +96,16 @@ const Login = () => {
         </div>
 
         <button
-          type="submit"
+          type=""
           className="w-full h-11 bg-[#050817] text-white rounded-md
           text-sm font-medium hover:bg-black transition
           shadow-lg shadow-black/10"
+          onClick={()=>{handleLogin()}}
         >
           Login
         </button>
 
-      </form>
+      </div>
 
       <p className="text-center text-sm text-gray-400 mt-6">
         Don't have an account?{" "}

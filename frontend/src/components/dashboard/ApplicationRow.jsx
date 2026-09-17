@@ -3,6 +3,7 @@ import ActionMenu from "./ActionMenu";
 
 const ApplicationRow = ({
   job,
+  role ,
   onStatusChange,
   onDelete,
 }) => {
@@ -28,7 +29,7 @@ const ApplicationRow = ({
 
       {/* Position */}
       <td className="px-5 py-4 text-xs text-gray-600">
-        {job.position}
+        {job.role}
       </td>
 
       {/* Status */}

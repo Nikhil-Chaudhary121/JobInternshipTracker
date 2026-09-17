@@ -68,18 +68,18 @@ const AddJobModal = ({
           </div>
 
 
-          {/* Position */}
+          {/* role */}
           <div>
 
             <label className="text-xs font-medium text-gray-700">
-              Job position
+              Job role
             </label>
 
             <input
               required
-              value={newJob.position}
+              value={newJob.role}
               onChange={(e) =>
-                handleChange("position", e.target.value)
+                handleChange("role", e.target.value)
               }
               placeholder="Frontend Developer"
               className="w-full h-10 mt-1.5 px-3 border border-gray-200 rounded-lg text-sm outline-none focus:border-blue-500"

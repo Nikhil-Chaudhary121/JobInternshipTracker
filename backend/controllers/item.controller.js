@@ -43,7 +43,9 @@ const getItem = async(req , res ) => {
 const createItem = async(req , res ) => {
     try {
         
-        const {company , role , user : userId } = req.body 
+        const {company , role , user : userId , status   } = req.body 
+        console.log(company , role, userId);
+        
 
         const isValid = mongoose.isValidObjectId(userId)
         if(!isValid){
@@ -59,6 +61,7 @@ const createItem = async(req , res ) => {
             return res.status(400).json({error : "something is missing"})
         }
         const newItem = new Item({
+            status ,
             company ,
             role,
             user: userId
@@ -80,15 +83,15 @@ const updateItem = async(req , res ) => {
         const validStatuses = ["applied", "interview", "rejected", "offer"];
 
         if(!isValid){
-            return res.status(400).json({error : "user id not valid"})
+            return res.status(400).json({error : "item id not valid"})
         }
         const item = await Item.findById(itemId)
         if(!item){
-            return res.status(400).json({message : "Item Does not Exist"})
+            return res.status(400).json({error : "Item Does not Exist"})
         }
 
         if (!status || !validStatuses.includes(status)) {
-            return res.status(400).json({ message: "status is not valid or empty" });
+            return res.status(400).json({ error: "status is not valid or empty" });
         }
         item.status = status;
         await item.save()

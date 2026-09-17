@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import jobsData from "../data/jobsData";
 
@@ -16,6 +16,12 @@ import DeleteJobModal from "../components/modals/DeleteJobModal";
 
 const HomePage = () => {
 
+  let user = localStorage.getItem("user")
+  user = JSON.parse(user)
+
+
+  console.log(user.id);
+  
   const [jobs, setJobs] = useState(jobsData);
 
   const [search, setSearch] = useState("");
@@ -26,20 +32,62 @@ const HomePage = () => {
 
   const [newJob, setNewJob] = useState({
     company: "",
-    position: "",
+    role: "",
     status: "Applied",
   });
+
+  // fetching posts
+  useEffect(()=>{
+    const getData = async()=>{
+      const res =  await fetch("http://localhost:5000/item/", {
+        method : "POST",
+        headers :{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({userId : user.id}),
+      })
+      const data = await res.json()
+      if(data.error){
+        console.log("Error while fetching item list in frontend : " , data.error)
+        return
+      }
+      console.log(data)
+      localStorage.setItem('posts' , data)
+      setJobs(data);
+      return
+    }
+    getData()
+  } , [setJobs])
 
 
   // =========================
   // CHANGE STATUS
   // =========================
 
-  const changeStatus = (id, status) => {
+  const changeStatus = async(id, status) => {
+    let lowerStatus = status.toLowerCase()
 
+    const res =  await fetch("http://localhost:5000/item/update", {
+        method : "PUT",
+        headers :{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status : lowerStatus , itemId : id}),
+      })
+      console.log(id);
+      
+
+      const data = await res.json()
+      if(data.error){
+        console.log("Error in updating Post frontend : " , data.error)
+        return
+      }
+      
+    console.log(data);
+    
     setJobs((prevJobs) =>
       prevJobs.map((job) =>
-        job.id === id
+        job._id === id
           ? {
               ...job,
               status,
@@ -55,14 +103,34 @@ const HomePage = () => {
   // DELETE JOB
   // =========================
 
-  const deleteJob = (id) => {
+  const deleteJob = async (id) => {
+    try {
 
-    setJobs((prevJobs) =>
-      prevJobs.filter((job) => job.id !== id)
-    );
+      const res =  await fetch("http://localhost:5000/item/delete/", {
+        method : "DELETE",
+        headers :{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({userId : user.id , itemId :id}),
+      })
 
-    setJobToDelete(null);
+      const data = await res.json() 
+      if(data.error){
+        console.log("Error in deleting Applicaion trycatch : " , data.error)
+      }
 
+      console.log(data)
+
+        setJobs((prevJobs) =>
+        prevJobs.filter((job) => job._id !== id)
+      );
+
+      setJobToDelete(null);
+      
+    } catch (error) {
+       console.log("Error in deleting applicalion frontend : " , error);
+      return
+    }
   };
 
 
@@ -70,14 +138,39 @@ const HomePage = () => {
   // ADD JOB
   // =========================
 
-  const addJob = (e) => {
+  const addJob = async(e) => {
+    let newStatus = newJob.status.toLowerCase()
+    console.log(newStatus);
+    
 
     e.preventDefault();
+
+    const res =  await fetch("http://localhost:5000/item/create", {
+        method : "POST",
+        headers :{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({company : newJob.company , role: newJob.role , status : newStatus , user : user.id}),
+      })
+      
+
+      const data = await res.json()
+      if(data.error){
+        console.log("Error in creating new post frontend :" , data.error);
+        setNewJob({
+          company: "",
+          role: "",
+          status: "Applied",
+        });
+        setShowAddModal(false);
+        return
+      }
+    console.log(data);
 
     const job = {
       id: Date.now(),
       company: newJob.company,
-      position: newJob.position,
+      role: newJob.role,
       status: newJob.status,
       appliedDate: "Today",
     };
@@ -89,7 +182,7 @@ const HomePage = () => {
 
     setNewJob({
       company: "",
-      position: "",
+      role: "",
       status: "Applied",
     });
 
@@ -115,7 +208,7 @@ const HomePage = () => {
         job.company
           .toLowerCase()
           .includes(query) ||
-        job.position
+        job.role
           .toLowerCase()
           .includes(query) ||
         job.status
@@ -280,8 +373,10 @@ const HomePage = () => {
 
               <ApplicationTable
                 jobs={filteredJobs}
+
                 onStatusChange={changeStatus}
                 onDelete={(job) =>
+
                   setJobToDelete(job)
                 }
               />

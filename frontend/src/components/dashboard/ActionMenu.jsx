@@ -42,7 +42,7 @@ const ActionMenu = ({
               <button
                 key={status}
                 onClick={() => {
-                  onStatusChange(job.id, status);
+                  onStatusChange(job._id, status);
                   setOpen(false);
                 }}
                 className={`w-full text-left px-3 py-2 rounded-md text-xs hover:bg-gray-50 ${
@@ -59,7 +59,9 @@ const ActionMenu = ({
 
             <button
               onClick={() => {
-                onDelete(job);
+                console.log(job._id);
+                
+                onDelete(job._id);
                 setOpen(false);
               }}
               className="w-full text-left px-3 py-2 rounded-md text-xs text-red-500 hover:bg-red-50"

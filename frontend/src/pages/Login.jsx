@@ -12,7 +12,7 @@ const Login = ({setIsLoggedIn}) => {
 
   const handleLogin = async() => {
     try {
-      const res =  await fetch("http://localhost:5000/user/login", {
+      const res =  await fetch(`https://jobinternshiptracker.onrender.com/user/login`, {
         method : "POST",
         headers :{
             "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const Login = ({setIsLoggedIn}) => {
           progress: undefined,
           theme: "light",
           });
-          localStorage.setItem('user' , JSON.stringify(data))
+          localStorage.setItem('user', JSON.stringify(data))
           setIsLoggedIn(true)
           navigate("/")
     } catch (error) {

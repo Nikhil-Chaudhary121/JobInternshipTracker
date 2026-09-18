@@ -22,7 +22,7 @@ const register = async (req , res) => {
         if(newUser) {
             const token = await jwtGenerate(newUser._id , res);
             await newUser.save();
-            res.status(200).json({token , user:{name , user, email , id : newUser._id}})
+            res.status(200).json({token , user:{name , user, email , id : newUser._id} , id : newUser._id})
         }else{
             res.status(400).json({error : "Invalid User Data"})
         }
@@ -52,7 +52,7 @@ const login = async (req , res) => {
         
         const token = await jwtGenerate(user._id , res)
         
-        res.status(200).json({message : "Logged in" , token , id : user._id})
+        res.status(200).json({ token , user : {...user} , id : user._id})
         
     } catch (error) {
         console.log("Error in LoginUser : ", error.message ) 

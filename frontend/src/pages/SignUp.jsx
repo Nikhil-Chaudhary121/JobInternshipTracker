@@ -20,7 +20,7 @@ const Signup = ({setIsLoggedIn}) => {
     try {
       // console.log("here");
       
-      const res = await fetch("http://localhost:5000/user/register", {
+      const res = await fetch("https://jobinternshiptracker.onrender.com/user/register", {
         method : "POST",
         headers :{
             "Content-Type": "application/json",

@@ -46,8 +46,10 @@ const HomePage = ({setIsLoggedIn }) => {
   // fetching posts
   useEffect(()=>{
    try {
+    
+    
      const getData = async()=>{
-      const res =  await fetch("http://localhost:5000/item/", {
+      const res =  await fetch("https://jobinternshiptracker.onrender.com/item/", {
         method : "POST",
         headers :{
             "Content-Type": "application/json",
@@ -113,7 +115,7 @@ const HomePage = ({setIsLoggedIn }) => {
     try {
       let lowerStatus = status.toLowerCase()
 
-    const res =  await fetch("http://localhost:5000/item/update", {
+    const res =  await fetch("https://jobinternshiptracker.onrender.com/item/update", {
         method : "PUT",
         headers :{
             "Content-Type": "application/json",
@@ -175,7 +177,7 @@ const HomePage = ({setIsLoggedIn }) => {
   const deleteJob = async (id) => {
     try {
 
-      const res =  await fetch("http://localhost:5000/item/delete/", {
+      const res =  await fetch("https://jobinternshiptracker.onrender.com/item/delete/", {
         method : "DELETE",
         headers :{
             "Content-Type": "application/json",
@@ -235,7 +237,7 @@ const HomePage = ({setIsLoggedIn }) => {
 
     e.preventDefault();
 
-    const res =  await fetch("http://localhost:5000/item/create", {
+    const res =  await fetch("https://jobinternshiptracker.onrender.com/item/create", {
         method : "POST",
         headers :{
             "Content-Type": "application/json",

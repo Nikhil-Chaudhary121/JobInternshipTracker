@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp.jsx'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 const App = () => {
+  
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('user'))
 
   return (

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 
-import jobsData from "../data/jobsData";
 
 import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
@@ -15,7 +14,7 @@ import DeleteJobModal from "../components/modals/DeleteJobModal";
 
 import { ToastContainer, toast  } from 'react-toastify';
 import LogoutModal from "../components/modals/LogoutModal";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = ({setIsLoggedIn }) => {
 

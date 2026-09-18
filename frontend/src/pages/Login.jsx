@@ -1,7 +1,7 @@
 import { ToastContainer , toast } from "react-toastify";
 import AuthLayout from "../components/AuthLayout";
 import { useState } from "react";
-import { useNavigate , redirect } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 
 const Login = ({setIsLoggedIn}) => {
   const navigate = useNavigate()
@@ -79,8 +79,7 @@ const Login = ({setIsLoggedIn}) => {
         </h2>
 
         <p className="text-sm text-gray-400 mt-2">
-          Login to access your personal hub and continue
-          where you left off.
+          Track your job and internship applications and stay on top of your career search.   
         </p>
       </div>
 

@@ -1,5 +1,4 @@
 import AuthLayout from "../components/AuthLayout.jsx";
-import AuthInput from "../components/AuthInput.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -89,8 +88,7 @@ const Signup = ({setIsLoggedIn}) => {
         </h2>
 
         <p className="text-sm text-gray-400 mt-2">
-          Access your tasks, notes, and projects anytime
-          anywhere — and keep everything flowing in one place.
+          Manage job and internship applications, track your progress, and keep every opportunity organized in one place.
         </p>
       </div>
 

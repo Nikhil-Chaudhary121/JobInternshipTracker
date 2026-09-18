@@ -23,13 +23,11 @@ const AuthLayout = ({ children }) => {
             {/* Text */}
             <div className="max-w-sm">
               <p className="text-sm text-gray-700 mb-3">
-                You can easily
+                Your next opportunity
               </p>
 
               <h1 className="text-3xl font-semibold leading-tight text-black">
-                Get access your personal
-                hub for clarity and
-                productivity.
+                Stay organized. Track applications. Land your next role.
               </h1>
             </div>
 

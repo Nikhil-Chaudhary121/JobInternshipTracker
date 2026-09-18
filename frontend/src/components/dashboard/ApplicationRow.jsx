@@ -3,7 +3,6 @@ import ActionMenu from "./ActionMenu";
 
 const ApplicationRow = ({
   job,
-  role ,
   onStatusChange,
   onDelete,
 }) => {

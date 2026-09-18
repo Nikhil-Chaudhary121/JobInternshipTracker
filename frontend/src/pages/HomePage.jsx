@@ -13,22 +13,29 @@ import ApplicationTable from "../components/dashboard/ApplicationTable";
 import AddJobModal from "../components/modals/AddJobModal";
 import DeleteJobModal from "../components/modals/DeleteJobModal";
 
+import { ToastContainer, toast  } from 'react-toastify';
+import LogoutModal from "../components/modals/LogoutModal";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = ({setIsLoggedIn }) => {
 
   let user = localStorage.getItem("user")
   user = JSON.parse(user)
 
 
-  console.log(user.id);
+
+  // console.log(user.id);
+  const navigate = useNavigate()
   
-  const [jobs, setJobs] = useState(jobsData);
+  const [jobs, setJobs] = useState([]);
 
   const [search, setSearch] = useState("");
 
   const [showAddModal, setShowAddModal] = useState(false);
 
   const [jobToDelete, setJobToDelete] = useState(null);
+  
+  const [logout, setLogout] = useState(null);
 
   const [newJob, setNewJob] = useState({
     company: "",
@@ -38,7 +45,8 @@ const HomePage = () => {
 
   // fetching posts
   useEffect(()=>{
-    const getData = async()=>{
+   try {
+     const getData = async()=>{
       const res =  await fetch("http://localhost:5000/item/", {
         method : "POST",
         headers :{
@@ -48,24 +56,62 @@ const HomePage = () => {
       })
       const data = await res.json()
       if(data.error){
+         toast.warn(data.error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
         console.log("Error while fetching item list in frontend : " , data.error)
         return
       }
-      console.log(data)
+      // console.log(data)
       localStorage.setItem('posts' , data)
       setJobs(data);
       return
     }
     getData()
+   } catch (error) {
+    console.log("Error in fetching applications : " , error)
+   }
   } , [setJobs])
 
+  const handleLogout = async() =>{
+    try {
+      localStorage.removeItem('user')
+       toast.success("Logged Out", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        setLogout(null)
+          localStorage.removeItem('user')
+          localStorage.removeItem('posts  ')
+          setIsLoggedIn(false)
+          navigate("/")
+       
+        
+    } catch (error) {
+      console.log("Error in loggin out : " , error)
+    }
+  }
 
   // =========================
   // CHANGE STATUS
   // =========================
 
   const changeStatus = async(id, status) => {
-    let lowerStatus = status.toLowerCase()
+    try {
+      let lowerStatus = status.toLowerCase()
 
     const res =  await fetch("http://localhost:5000/item/update", {
         method : "PUT",
@@ -74,16 +120,36 @@ const HomePage = () => {
           },
           body: JSON.stringify({ status : lowerStatus , itemId : id}),
       })
-      console.log(id);
+      // console.log(id);
       
 
       const data = await res.json()
       if(data.error){
+          toast.warn(data.error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
         console.log("Error in updating Post frontend : " , data.error)
         return
       }
       
-    console.log(data);
+    // console.log(data);
+     toast.success("Status Changed", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
     
     setJobs((prevJobs) =>
       prevJobs.map((job) =>
@@ -96,6 +162,9 @@ const HomePage = () => {
       )
     );
 
+    } catch (error) {
+      console.log("Error in changing status frontend :" , error) 
+    }
   };
 
 
@@ -116,10 +185,30 @@ const HomePage = () => {
 
       const data = await res.json() 
       if(data.error){
+          toast.warn('Application Deleted Successfully', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
         console.log("Error in deleting Applicaion trycatch : " , data.error)
       }
 
-      console.log(data)
+      // console.log(data)
+        toast.success('Application Deleted Successfully', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
 
         setJobs((prevJobs) =>
         prevJobs.filter((job) => job._id !== id)
@@ -139,7 +228,8 @@ const HomePage = () => {
   // =========================
 
   const addJob = async(e) => {
-    let newStatus = newJob.status.toLowerCase()
+    try {
+      let newStatus = newJob.status.toLowerCase()
     console.log(newStatus);
     
 
@@ -155,7 +245,18 @@ const HomePage = () => {
       
 
       const data = await res.json()
-      if(data.error){
+      if(data.error){ 
+        toast.warn(data.error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        
         console.log("Error in creating new post frontend :" , data.error);
         setNewJob({
           company: "",
@@ -165,7 +266,17 @@ const HomePage = () => {
         setShowAddModal(false);
         return
       }
-    console.log(data);
+    // console.log(data);
+     toast.success("Application Created", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
 
     const job = {
       id: Date.now(),
@@ -187,8 +298,28 @@ const HomePage = () => {
     });
 
     setShowAddModal(false);
+    } catch (error) {
+      console.error("Error in creating application frontend : " , error)
+    }
 
   };
+
+  //================
+  // HandleUselessButtons
+  //================
+
+  const handleClick = async()=>{
+    toast.info("Comming Soon it's Early Version", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light"
+      });
+  }
 
 
   // =========================
@@ -257,17 +388,31 @@ const HomePage = () => {
             SIDEBAR
         ========================= */}
 
-        <Sidebar />
+        <Sidebar handleClick={()=> {handleClick()}} />
 
 
         {/* =========================
             MAIN
         ========================= */}
 
-        <div className="flex-1 min-w-0">
+        <div  className="flex-1 min-w-0" >
+        <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick={true}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
 
           <Header
             onAddJob={() => setShowAddModal(true)}
+            onLogout={()=> setLogout(true)}
+            handleClick={()=> {handleClick()}}
           />
 
 
@@ -357,6 +502,7 @@ const HomePage = () => {
                     </button>
 
                     <button
+                     onClick={()=> {handleClick()}}
                       className="h-9 px-3 border border-gray-200 rounded-lg text-xs hover:bg-gray-50"
                     >
                       Export
@@ -453,6 +599,14 @@ const HomePage = () => {
         job={jobToDelete}
         onClose={() => setJobToDelete(null)}
         onConfirm={deleteJob}
+      />
+       {/* =========================
+          LOGOUT MODAL
+      ========================= */}
+      <LogoutModal
+        logout={logout}
+        onClose={() => setLogout(null)}
+        onConfirm={handleLogout}
       />
 
     </div>

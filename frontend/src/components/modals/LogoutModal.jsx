@@ -1,9 +1,9 @@
-const DeleteJobModal = ({
-  job,
+const LogoutModal = ({
+  logout,
   onClose,
   onConfirm,
 }) => {
-  if (!job) return null;
+  if (!logout) return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
@@ -15,13 +15,11 @@ const DeleteJobModal = ({
         </div>
 
         <h2 className="text-base font-semibold">
-          Delete application?
+          Logout?
         </h2>
 
         <p className="text-sm text-gray-500 mt-2">
-          Are you sure you want to delete your application
-          for <span className="font-medium text-gray-700">{job.role}</span>
-          at <span className="font-medium text-gray-700">{job.company}</span>?
+          Are you sure you want to Logout
         </p>
 
         <div className="flex gap-2 mt-6">
@@ -35,10 +33,10 @@ const DeleteJobModal = ({
 
           <button
             onClick={() => {
-              onConfirm(job)}}
+              onConfirm()}}
             className="flex-1 h-10 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600"
           >
-            Delete
+            Logout
           </button>
 
         </div>
@@ -49,4 +47,4 @@ const DeleteJobModal = ({
   );
 };
 
-export default DeleteJobModal;
+export default LogoutModal;

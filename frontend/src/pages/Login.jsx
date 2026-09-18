@@ -1,7 +1,10 @@
+import { ToastContainer , toast } from "react-toastify";
 import AuthLayout from "../components/AuthLayout";
 import { useState } from "react";
+import { useNavigate , redirect } from "react-router-dom";
 
-const Login = () => {
+const Login = ({setIsLoggedIn}) => {
+  const navigate = useNavigate()
   const [inputs , setInputs] = useState({
     username  : "",
     password : "",
@@ -18,11 +21,33 @@ const Login = () => {
       })
       const data = await res.json()
       if(data.error){
+         toast.warn(data.error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
         console.log("Error in Login Request : ", data.error)
         return;
       }
-      console.log(data);
-      localStorage.setItem('user' , JSON.stringify(data))
+      // console.log(data);
+       toast.success("Logged In", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+          localStorage.setItem('user' , JSON.stringify(data))
+          setIsLoggedIn(true)
+          navigate("/")
     } catch (error) {
       console.log("Error in login from frontend :" ,error.message)
       return
@@ -31,6 +56,18 @@ const Login = () => {
 
   return (
     <AuthLayout>
+      <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          />
 
       <div className="mb-7">
         <div className="text-3xl text-orange-400 mb-4">

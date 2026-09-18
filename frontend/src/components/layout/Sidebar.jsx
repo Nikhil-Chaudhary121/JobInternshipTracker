@@ -1,11 +1,11 @@
-const Sidebar = () => {
+const Sidebar = ({handleClick}) => {
   return (
     <aside className="hidden lg:flex w-60 shrink-0 border-r border-gray-200 bg-white min-h-screen flex-col">
 
       {/* Logo */}
       <div className="h-16 px-5 flex items-center border-b border-gray-100">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+          <div onClick={handleClick} className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
             <span className="text-white font-bold text-sm">
               J
             </span>
@@ -20,35 +20,35 @@ const Sidebar = () => {
       {/* Navigation */}
       <nav className="p-3 space-y-1">
 
-        <p className="px-3 pt-3 pb-2 text-[10px] font-medium text-gray-400 uppercase tracking-wider">
+        <p onClick={handleClick} className="px-3 pt-3 pb-2 text-[10px] font-medium text-gray-400 uppercase tracking-wider">
           Workspace
         </p>
 
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-50 text-blue-600 text-sm font-medium">
+        <button onClick={handleClick} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-50 text-blue-600 text-sm font-medium">
           <DashboardIcon />
           Dashboard
         </button>
 
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
+        <button onClick={handleClick} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
           <ApplicationsIcon />
           Applications
         </button>
 
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
+        <button onClick={handleClick} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
           <InterviewIcon />
           Interviews
         </button>
 
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
+        <button onClick={handleClick} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
           <CompanyIcon />
           Companies
         </button>
 
-        <p className="px-3 pt-7 pb-2 text-[10px] font-medium text-gray-400 uppercase tracking-wider">
+        <p onClick={handleClick} className="px-3 pt-7 pb-2 text-[10px] font-medium text-gray-400 uppercase tracking-wider">
           Other
         </p>
 
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
+        <button onClick={handleClick} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 text-sm transition">
           <SettingsIcon />
           Settings
         </button>
@@ -64,11 +64,11 @@ const Sidebar = () => {
           </div>
 
           <div className="min-w-0">
-            <p className="text-sm font-medium truncate">
+            <p onClick={handleClick} className="text-sm font-medium truncate">
               Your Account
             </p>
 
-            <p className="text-xs text-gray-400 truncate">
+            <p onClick={handleClick} className="text-xs text-gray-400 truncate">
               Job seeker
             </p>
           </div>

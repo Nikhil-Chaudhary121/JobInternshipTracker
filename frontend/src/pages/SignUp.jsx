@@ -1,10 +1,13 @@
 import AuthLayout from "../components/AuthLayout.jsx";
 import AuthInput from "../components/AuthInput.jsx";
 import { useState } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 
-const Signup = () => {
+const Signup = ({setIsLoggedIn}) => {
+
+  const navigate = useNavigate()
 
   const [inputs, setInputs] = useState({
     username: "",
@@ -15,7 +18,7 @@ const Signup = () => {
 
   const handleSignup = async () =>{
     try {
-      console.log("here");
+      // console.log("here");
       
       const res = await fetch("http://localhost:5000/user/register", {
         method : "POST",
@@ -27,11 +30,33 @@ const Signup = () => {
       })
       const data = await res.json()
       if(data.error){
+         toast.warn(data.error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
         console.log("error while fetching data after signup : " , data.error)
         return ;
       }
+       toast.success("Account Created", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       localStorage.setItem("user" , JSON.stringify(data))
-      console.log(data);
+      setIsLoggedIn(true)
+      navigate("/")
+      // console.log(data);
     } catch (error) {
       console.log("Error in signup Frontend : ", error.message)
       return
@@ -41,7 +66,19 @@ const Signup = () => {
 
   return (
     <AuthLayout>
-
+      <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          
+          />
       <div className="mb-7">
         <div className="text-3xl text-orange-400 mb-4">
           *

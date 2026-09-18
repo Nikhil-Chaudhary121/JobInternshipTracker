@@ -1,4 +1,6 @@
-const Header = ({ onAddJob }) => {
+import { IoLogOutOutline } from "react-icons/io5";
+
+const Header = ({ onAddJob , onLogout  , handleClick}) => {
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6">
 
@@ -39,16 +41,16 @@ const Header = ({ onAddJob }) => {
           </span>
         </button>
 
-        <button className="hidden sm:flex w-9 h-9 rounded-full hover:bg-gray-100 items-center justify-center">
-          ?
+        <button onClick={onLogout} className="hidden sm:flex w-9 h-9 rounded-full hover:bg-gray-100 items-center justify-center">
+          <IoLogOutOutline />
         </button>
 
-        <button className="hidden sm:flex w-9 h-9 rounded-full hover:bg-gray-100 items-center justify-center">
+        <button onClick={handleClick} className="hidden sm:flex w-9 h-9 rounded-full hover:bg-gray-100 items-center justify-center">
           <SettingsIcon />
         </button>
 
-        <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium">
-          N
+        <div onClick={handleClick} className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium">
+          ?
         </div>
 
       </div>

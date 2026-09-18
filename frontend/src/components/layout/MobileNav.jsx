@@ -1,29 +1,33 @@
-const MobileNav = () => {
+
+
+const MobileNav = ({handleClick}) => {
+  
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-2">
+      
 
       <div className="flex items-center justify-around">
 
-        <button className="flex flex-col items-center gap-1 text-blue-600">
+        <button onClick={handleClick} className="flex flex-col items-center gap-1 text-blue-600">
           <DashboardIcon />
           <span className="text-[10px]">Home</span>
         </button>
 
-        <button className="flex flex-col items-center gap-1 text-gray-400">
+        <button onClick={handleClick} className="flex flex-col items-center gap-1 text-gray-400">
           <ApplicationsIcon />
           <span className="text-[10px]">Jobs</span>
         </button>
 
-        <button className="w-11 h-11 -mt-6 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg">
+        <button onClick={handleClick} className="w-11 h-11 -mt-6 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg">
           <span className="text-2xl">+</span>
         </button>
 
-        <button className="flex flex-col items-center gap-1 text-gray-400">
+        <button onClick={handleClick} className="flex flex-col items-center gap-1 text-gray-400">
           <InterviewIcon />
           <span className="text-[10px]">Interviews</span>
         </button>
 
-        <button className="flex flex-col items-center gap-1 text-gray-400">
+        <button onClick={handleClick} className="flex flex-col items-center gap-1 text-gray-400">
           <SettingsIcon />
           <span className="text-[10px]">Settings</span>
         </button>

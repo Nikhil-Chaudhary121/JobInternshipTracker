@@ -59,7 +59,7 @@ const ActionMenu = ({
 
             <button
               onClick={() => {
-                console.log(job._id);
+                // console.log(job._id);
                 
                 onDelete(job._id);
                 setOpen(false);
